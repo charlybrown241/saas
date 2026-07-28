@@ -21,7 +21,7 @@ export default function CheckoutButton() {
     paddle.Checkout.open({
       items: [
         {
-          priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID || '',
+          priceId: 'pri_01kymbpt28ppymjvmvs5kk3q3z', // ID du pack Pro
           quantity: 1,
         },
       ],
@@ -32,9 +32,9 @@ export default function CheckoutButton() {
     <button
       onClick={handleCheckout}
       disabled={!paddle}
-      className="px-4 py-2 bg-blue-600 text-white rounded disabled:bg-gray-400"
+      className="px-4 py-2 bg-[#163a24] text-[#a3e635] font-bold rounded-xl disabled:bg-gray-400"
     >
-      {paddle ? 'Acheter maintenant (Test)' : 'Chargement...'}
+      {paddle ? 'Acheter le Pack Pro (Test)' : 'Chargement...'}
     </button>
   );
 }

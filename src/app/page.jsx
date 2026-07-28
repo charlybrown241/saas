@@ -31,18 +31,36 @@ export default function LandingPage() {
     });
   }, []);
 
-  const handleCheckout = () => {
+  // Fonction pour le plan Starter (utilise la variable d'environnement ou un ID par défaut)
+  const handleCheckoutStarter = () => {
     if (!paddle) return;
 
     paddle.Checkout.open({
       items: [
         {
-          priceId: process.env.NEXT_PUBLIC_PADDLE_PRICE_ID || '',
+          priceId: process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID || '',
           quantity: 1,
         },
       ],
       settings: {
-        successUrl: `${window.location.origin}/signup?subscribed=true`, // Redirection vers l'inscription après succès
+        successUrl: `${window.location.origin}/signup?subscribed=true`,
+      },
+    });
+  };
+
+  // Fonction pour le plan Pro (utilise directement votre ID de prix fourni)
+  const handleCheckoutPro = () => {
+    if (!paddle) return;
+
+    paddle.Checkout.open({
+      items: [
+        {
+          priceId: 'pri_01kymbpt28ppymjvmvs5kk3q3z',
+          quantity: 1,
+        },
+      ],
+      settings: {
+        successUrl: `${window.location.origin}/signup?subscribed=true`,
       },
     });
   };
@@ -77,7 +95,7 @@ export default function LandingPage() {
       <div className="bg-[#163a24] text-white text-[11px] py-2 px-6">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5"><Phone size={13} className="text-[#a3e635]" /> +212 (0) 70 469 57 07</span>
+            <span className="flex items-center gap-1.5"><Phone size={13} className="text-[#a3e635]" /> +212 (0) 5 00 00 00 00</span>
             <span className="flex items-center gap-1.5"><Mail size={13} className="text-[#a3e635]" /> contact@univision.com</span>
             <span className="flex items-center gap-1.5 hidden md:flex"><MapPin size={13} className="text-[#a3e635]" /> Casablanca, Maroc</span>
           </div>
@@ -105,7 +123,6 @@ export default function LandingPage() {
         </nav>
 
         <div className="flex items-center gap-3">
-          {/* Modifié ici : redirection vers /register (ou /signup selon votre dossier) */}
           <Link href="/register" className="text-xs font-semibold text-slate-700 hover:text-[#163a24] px-3 py-2 transition-colors">
             Connexion
           </Link>
@@ -124,12 +141,13 @@ export default function LandingPage() {
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-[#111827] leading-[1.1]">
-            Optimisez la gestion de votre campus <br />
-            <span className="text-[#163a24]">avec excellence et fluidité</span>
+            Pilote ton université <br />
+            et orchestre ton campus <br />
+            <span className="text-[#163a24]">en toute simplicité</span>
           </h1>
           
           <p className="text-xs md:text-sm text-slate-500 max-w-md leading-relaxed">
-            Fini les tâches administratives lourdes et les outils dispersés. Univision rassemble les inscriptions, les cursus et le suivi des étudiants en un seul endroit chaleureux et fluide. Créé par Charly Assoumou.
+            Fini les tâches administratives lourdes et les outils dispersés. Univision rassemble les inscriptions, les cursus et le suivi des étudiants en un seul endroit chaleureux et fluide.
           </p>
 
           <div className="pt-2 flex items-center gap-4">
@@ -231,7 +249,6 @@ export default function LandingPage() {
               On a voulu créer l'outil idéal pour les facultés : simple, efficace, sans lourdeur administrative, pour que chacun puisse se consacrer pleinement à la réussite pédagogique.
             </p>
 
-            {/* Jauges de performance */}
             <div className="space-y-4 pt-2">
               <div>
                 <div className="flex justify-between text-xs font-bold text-slate-800 mb-1">
@@ -272,7 +289,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-12 border-t border-slate-100 text-center">
           <div>
             <div className="text-3xl font-black text-[#111827]">15k+</div>
@@ -312,7 +328,6 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Carte 1 */}
             <div className="bg-[#112d1b] p-6 rounded-2xl border border-white/10 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <div className="w-10 h-10 rounded-lg bg-[#163a24] text-[#a3e635] flex items-center justify-center">
@@ -325,7 +340,6 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Carte 2 */}
             <div className="bg-[#a3e635] text-[#111827] p-6 rounded-2xl flex flex-col justify-between space-y-6 shadow-lg">
               <div className="space-y-3">
                 <span className="text-xs font-bold uppercase tracking-wider bg-[#163a24]/10 px-2.5 py-1 rounded-full inline-block">Essentiel campus</span>
@@ -339,7 +353,6 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Carte 3 */}
             <div className="bg-[#112d1b] p-6 rounded-2xl border border-white/10 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <div className="w-10 h-10 rounded-lg bg-[#163a24] text-[#a3e635] flex items-center justify-center">
@@ -384,7 +397,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <button 
-              onClick={handleCheckout}
+              onClick={handleCheckoutStarter}
               disabled={!paddle}
               className="w-full h-11 bg-slate-100 hover:bg-slate-200 text-[#111827] text-xs font-semibold rounded-xl flex items-center justify-center transition-all cursor-pointer disabled:bg-gray-200 disabled:text-gray-400"
             >
@@ -413,7 +426,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <button 
-              onClick={handleCheckout}
+              onClick={handleCheckoutPro}
               disabled={!paddle}
               className="w-full h-11 bg-[#a3e635] hover:bg-[#bef264] text-[#163a24] text-xs font-bold rounded-xl flex items-center justify-center transition-all shadow-sm cursor-pointer disabled:bg-gray-400 disabled:text-gray-200"
             >
@@ -459,7 +472,7 @@ export default function LandingPage() {
             </div>
             <span className="font-extrabold tracking-tight text-white uppercase">Univision</span>
           </div>
-          <p>© 2026 Univision. Fait avec passion pour l'éducation.Charly Assoumou </p>
+          <p>© 2026 Univision. Fait avec passion pour l'éducation.</p>
           <div className="flex gap-6 text-slate-300">
             <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
             <a href="#" className="hover:text-white transition-colors">Conditions générales</a>
